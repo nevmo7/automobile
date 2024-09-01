@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ItemService } from './services/item.service';
+import { FiltersService } from './services/filters.service'
 
 @Component({
   selector: 'app-root',
@@ -16,13 +17,16 @@ export class AppComponent implements OnInit {
   vehicles = [];
 
   itemsFirebaseService = inject(ItemService)
+  searchFilterService = inject(FiltersService)
 
   ngOnInit(): void {
 
-    //getting items from firestore
+    
+    // getting items from firestore
     this.itemsFirebaseService.getItems().subscribe(items => {
-      console.log(items);
+      this.searchFilterService.searchName(items, "toyota");
     })
+
   }
 
 }
