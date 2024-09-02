@@ -5,6 +5,7 @@ import { ItemsInterface } from './types/items.interface';
 import { CommonModule } from '@angular/common';
 
 import { FormGroup, FormControl } from "@angular/forms";
+import { ngxCsv } from 'ngx-csv/ngx-csv';
 
 @Component({
   selector: 'app-root',
@@ -26,10 +27,22 @@ export class AppComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    // getting items from firestore
-    this.itemsFirebaseService.getItems().subscribe(items => {
-      this.vehicles = items;
-    })
+
+    const localfilterName = localStorage.getItem("filtername");
+    const localfilterBy = localStorage.getItem("filterby");
+    const localfilterValue = localStorage.getItem("filtervalue");
+    
+    //if there are filter properties in local storage, get filtered items
+    if (localfilterName != null && localfilterBy != null && localfilterValue != null) {
+      //getting filtered items with filter propertirs in local storage
+      this.filter(localfilterName, localfilterBy, localfilterValue)
+    }else{
+      // getting all items from firestore
+      this.itemsFirebaseService.getItems().subscribe(items => {
+        this.vehicles = items;
+      })
+    }
+    
   }
 
   //search function to call the search service in firestore
@@ -41,6 +54,13 @@ export class AppComponent implements OnInit {
 
   //filter by a column name and a numerical value 
   filter(filterName: string, filterBy: string, filterValue: string): void {
+    //store filter properties into local storage
+    if (filterName != null && filterBy != null && filterValue != null) {
+      localStorage.setItem("filtername", filterName);
+      localStorage.setItem("filterby", filterBy);
+      localStorage.setItem("filtervalue", filterValue);
+    }
+
     this.itemsFirebaseService.getItemByFilter(filterName, filterBy, parseInt(filterValue)).subscribe(items => {
       this.vehicles = items
     })
@@ -55,9 +75,13 @@ export class AppComponent implements OnInit {
 
   //sort function
   sort(sortBy: string, sortOrder: string){
+    //store sort properties into local storage
+
     if (sortOrder.match("ascending")) {
+      console.log("sorting in ascending order")
       this.sortAscending(sortBy);
     } else if (sortOrder.match("descending")){
+      console.log("sorting in descending order")
       this.sortDescending(sortBy);
     }
   }
@@ -114,5 +138,23 @@ export class AppComponent implements OnInit {
     }
   }
 
+  //function to export table to csv
+  downloadFile(): void {
+    var options = { 
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalseparator: '.',
+      showLabels: false, 
+      showTitle: false,
+      title: 'Your title',
+      useBom: false,
+      noDownload: false,
+      headers: ["Name", "Acceleration", "Cylinders", "Displacement", "Year", "MGP", "Origin", "Horsepower", "Weight"]
+    }
+    console.log(JSON.stringify(this.vehicles));
+    new ngxCsv(JSON.stringify(this.vehicles), 'My Report', options);
+
+
+  }
 }
 

@@ -8,8 +8,8 @@
 <select name="filterHeader" id="filterHeader" #filterHeader>
     <option value="acceleration">Acceleration</option>
     <option value="cylinders">Cylinders</option>
-    <option value="diaplacement">Diaplacement</option>
-    <option value="year">Year</option>
+    <option value="displacement">Displacement</option>
+    <option value="model_year">Year</option>
     <option value="mpg">MPG</option>
     <option value="horsepower">Horsepower</option>
     <option value="weight">Weight</option>
@@ -37,8 +37,8 @@
     <option value="name">Name</option>
     <option value="acceleration">Acceleration</option>
     <option value="cylinders">Cylinders</option>
-    <option value="diaplacement">Diaplacement</option>
-    <option value="year">Year</option>
+    <option value="displacement">Displacement</option>
+    <option value="model_year">Year</option>
     <option value="mpg">MPG</option>
     <option value="origin">Origin</option>
     <option value="horsepower">Horsepower</option>
@@ -49,6 +49,10 @@
     <option value="descending">Descending</option>
 </select>
 <button (click)="sort(sortBy.value, sortOrder.value)">Go!</button>
+
+<br/>
+
+<button (click)="downloadFile()">Export</button>
 
 <table [border]="5">
     <thead>
