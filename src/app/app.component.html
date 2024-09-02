@@ -1,0 +1,78 @@
+<label for="searchTerm">Search Name: </label>
+<input id="searchTerm" type="text" #searchTerm/>
+<button (click)="search(searchTerm.value)">Go!</button>
+
+<br/>
+
+<label for="filterHeader">Filter: </label>
+<select name="filterHeader" id="filterHeader" #filterHeader>
+    <option value="acceleration">Acceleration</option>
+    <option value="cylinders">Cylinders</option>
+    <option value="diaplacement">Diaplacement</option>
+    <option value="year">Year</option>
+    <option value="mpg">MPG</option>
+    <option value="horsepower">Horsepower</option>
+    <option value="weight">Weight</option>
+</select>
+
+<select name="filterBy" id="filterBy" #filterBy>
+    <option value="&lt;">Less than</option>
+    <option value="==">Equal to</option>
+    <option value="&gt;">More than</option>
+</select>
+
+<input [value]="" #filterValue/>
+<button (click)="filter(filterHeader.value, filterBy.value, filterValue.value)">Go!</button>
+
+<br/>
+
+<label for="originName">Origin: </label>
+<input id="originName" type="text" #originValue/>
+<button (click)="origin(originValue.value)">Go!</button>
+
+<br/>
+
+<label for="sortBy">Sort By: </label>
+<select name="sortBy" id="sortBy" #sortBy>
+    <option value="name">Name</option>
+    <option value="acceleration">Acceleration</option>
+    <option value="cylinders">Cylinders</option>
+    <option value="diaplacement">Diaplacement</option>
+    <option value="year">Year</option>
+    <option value="mpg">MPG</option>
+    <option value="origin">Origin</option>
+    <option value="horsepower">Horsepower</option>
+    <option value="weight">Weight</option>
+</select>
+<select name="orderBy" id="orderBy" #sortOrder>
+    <option value="ascending">Ascending</option>
+    <option value="descending">Descending</option>
+</select>
+<button (click)="sort(sortBy.value, sortOrder.value)">Go!</button>
+
+<table [border]="5">
+    <thead>
+        <th>Name</th>
+        <th>Acceleration</th>
+        <th>Cylinders</th>
+        <th>Displacement</th>
+        <th>Year</th>
+        <th>MPG</th>
+        <th>Origin</th>
+        <th>Horsepower</th>
+        <th>Weight</th>
+    </thead>
+    <tbody>
+        <tr *ngFor = "let v of vehicles">
+            <td>{{v.name}}</td>
+            <td>{{v.acceleration}}</td>
+            <td>{{v.cylinders}}</td>
+            <td>{{v.displacement}}</td>
+            <td>{{v.model_year}}</td>
+            <td>{{v.mpg}}</td>
+            <td>{{v.origin}}</td>
+            <td>{{v.horsepower}}</td>
+            <td>{{v.weight}}</td>
+        </tr>
+    </tbody>
+</table>
