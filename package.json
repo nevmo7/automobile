@@ -24,6 +24,7 @@
     "csv-parser": "^3.0.0",
     "file-saver": "^2.0.5",
     "firebase": "^10.13.1",
+    "json-to-csv-export": "^3.0.1",
     "ngx-csv": "^0.3.2",
     "ngx-papaparse": "^8.0.0",
     "rxjs": "~7.8.0",
